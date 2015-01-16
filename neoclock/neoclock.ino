@@ -46,15 +46,15 @@ void time()
     if(now()!=t)
     {
       clearBuffer();
-      for(int i=0;i<12;i++)
+      /*for(int i=0;i<12;i++)
       {
-        /*leds[0][i*5+2]=25;
+        leds[0][i*5+2]=25;
         leds[1][i*5+2]=25;
         leds[2][i*5+2]=25;
         leds[0][i*5+3]=25;
         leds[1][i*5+3]=25;
-        leds[2][i*5+3]=25;*/
-      }
+        leds[2][i*5+3]=25;
+      }*/
       
       t=now();
 
