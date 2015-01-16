@@ -26,49 +26,63 @@ void setup()
   Serial.begin(9600);
   setTime(11,59,55,29,12,2014);
   pinMode(A0,INPUT);
-  
+  attachInterrupt(0,changeMode,FALLING);
+
 
 }
 
 void loop()
 {
   time();
+  oneColor();
 }
 
 
 
-void time()
+void oneColor()
 {
-  while (mode==0)
+  if(mode==1)
   {
-
-    Serial.println(second(t));
-    if(now()!=t)
+    for(int i=0;i<60;i++)
     {
-      clearBuffer();
-      /*for(int i=0;i<12;i++)
-      {
-        leds[0][i*5+2]=25;
-        leds[1][i*5+2]=25;
-        leds[2][i*5+2]=25;
-        leds[0][i*5+3]=25;
-        leds[1][i*5+3]=25;
-        leds[2][i*5+3]=25;
-      }*/
-      
-      t=now();
-
-      for(byte i=hourFormat12(t)*5-1;i<=hourFormat12(t)*5+1;i++)
-      {
-        addPixelColor(i,hourColor);
-      }
-
-      addPixelColor(minute(t),minColor);
-      addPixelColor(second(t),secColor);
-      writeOut();
+      strip.setPixelColor(i,100,255,100);
+    }
+    strip.show();
     }
   }
-}
+
+  void time()
+  {
+    while (mode==0)
+    {
+
+      Serial.println(second(t));
+      if(now()!=t)
+      {
+        clearBuffer();
+        /*for(int i=0;i<12;i++)
+         {
+         leds[0][i*5+2]=25;
+         leds[1][i*5+2]=25;
+         leds[2][i*5+2]=25;
+         leds[0][i*5+3]=25;
+         leds[1][i*5+3]=25;
+         leds[2][i*5+3]=25;
+         }*/
+
+        t=now();
+
+        for(byte i=hourFormat12(t)*5-1;i<=hourFormat12(t)*5+1;i++)
+        {
+          addPixelColor(i,hourColor);
+        }
+
+        addPixelColor(minute(t),minColor);
+        addPixelColor(second(t),secColor);
+        writeOut();
+      }
+    }
+  }
 
 void addPixelColor(int n,byte* c)
 {
@@ -99,6 +113,16 @@ void clearBuffer()
     leds[2][i]=0;
   }
 }
+
+
+void changeMode()
+{
+  mode=mode++;
+    if (mode>1) mode=0;
+    delay(300);
+}
+
+
 
 
 
