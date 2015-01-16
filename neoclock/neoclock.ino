@@ -24,7 +24,10 @@ void setup()
   strip.begin();
   strip.show();
   Serial.begin(9600);
-  setTime(11,25,55,29,12,2014);
+  setTime(11,59,55,29,12,2014);
+  pinMode(A0,INPUT);
+  
+
 }
 
 void loop()
@@ -43,9 +46,19 @@ void time()
     if(now()!=t)
     {
       clearBuffer();
+      for(int i=0;i<12;i++)
+      {
+        /*leds[0][i*5+2]=25;
+        leds[1][i*5+2]=25;
+        leds[2][i*5+2]=25;
+        leds[0][i*5+3]=25;
+        leds[1][i*5+3]=25;
+        leds[2][i*5+3]=25;*/
+      }
+      
       t=now();
 
-      for(byte i=hourFormat12(t)*5-1;i<hourFormat12(t)*5+2;i++)
+      for(byte i=hourFormat12(t)*5-1;i<=hourFormat12(t)*5+1;i++)
       {
         addPixelColor(i,hourColor);
       }
@@ -86,6 +99,7 @@ void clearBuffer()
     leds[2][i]=0;
   }
 }
+
 
 
 
